@@ -569,4 +569,199 @@ useEffect(() => {
 
 ---
 
+## State Machine Driven Window Management
+
+When a window's visibility is controlled by application state (e.g., ASR status), follow these patterns to avoid visual glitches.
+
+### Problem: Repeated show() Calls with Side Effects
+
+```typescript
+// WRONG: show() has side effects that run every time
+sendStatus(status: ASRStatus): void {
+  if (status === 'connecting' || status === 'listening' || status === 'processing') {
+    this.show();  // Called on EVERY status change!
+  }
+}
+
+show(): void {
+  this.resetHeight();  // Side effect runs every time!
+  this.window?.showInactive();
+}
+```
+
+This causes visual glitches because `resetHeight()` runs even when the window is already visible.
+
+### Solution: Idempotent show() with Visibility Check
+
+```typescript
+// CORRECT: Only perform setup when transitioning from hidden to visible
+show(): void {
+  if (!this.window) {
+    this.create();
+  }
+
+  // Only reset if window is NOT currently visible (new session)
+  const wasVisible = this.window?.isVisible() ?? false;
+  if (!wasVisible) {
+    this.resetHeight();  // Only runs on first show
+  }
+
+  this.window?.showInactive();
+}
+```
+
+### IPC Event Ordering: Action Before Notification
+
+When hiding a window based on state change, **hide first, then don't notify**:
+
+```typescript
+// WRONG: Notify renderer, then hide
+// Causes: Renderer re-renders (removes content) → visual bounce → then window hides
+sendStatus(status: ASRStatus): void {
+  if (status === 'idle') {
+    this.window.webContents.send('status', status);  // Renderer re-renders!
+    this.hide();  // Too late, user saw the bounce
+  }
+}
+
+// CORRECT: Hide first, skip notification
+sendStatus(status: ASRStatus): void {
+  if (status === 'idle') {
+    this.hide();  // Window disappears immediately
+    return;       // Don't notify renderer - window is already hidden
+  }
+  this.window.webContents.send('status', status);
+}
+```
+
+### Key Principles
+
+| Principle | Description |
+|-----------|-------------|
+| **Idempotent Operations** | `show()` called twice should have same effect as once |
+| **Action Before Notification** | Execute visual changes before notifying renderer |
+| **Visibility Guards** | Check `isVisible()` before performing setup actions |
+| **Skip Unnecessary Updates** | Don't send state to renderer if window is about to hide |
+
+---
+
+## Multi-Window IPC Broadcast Pattern
+
+When your app has multiple windows (main window, floating window, settings window, etc.), you must consider **which window(s) should receive IPC messages**.
+
+### Problem: Wrong Window Receives Message
+
+```typescript
+// WRONG: Only sends to main window
+import { getMainWindow } from './windows/main';
+
+function sendASRStatus(status: string): void {
+  const mainWindow = getMainWindow();
+  mainWindow?.webContents.send('asr:status', status);
+  // Bug: Floating window never receives the status!
+}
+```
+
+### Solution: Broadcast to All Windows
+
+```typescript
+// CORRECT: Broadcast to all windows
+import { BrowserWindow } from 'electron';
+
+function broadcastToAllWindows(channel: string, ...args: unknown[]): void {
+  const windows = BrowserWindow.getAllWindows();
+  for (const win of windows) {
+    if (!win.isDestroyed()) {
+      win.webContents.send(channel, ...args);
+    }
+  }
+}
+
+function sendASRStatus(status: string): void {
+  broadcastToAllWindows('asr:status', status);
+}
+```
+
+### When to Use Each Pattern
+
+| Pattern | Use Case | Example |
+|---------|----------|---------|
+| `getMainWindow()` | Only main window needs the data | App-level settings changed |
+| `broadcastToAllWindows()` | Multiple windows need the data | ASR status, real-time updates |
+| `specificWindow.webContents.send()` | Only one specific window | Response to that window's request |
+
+### Export Pattern for Window References
+
+```typescript
+// src/main/windows/index.ts
+import { BrowserWindow } from 'electron';
+
+export function getAllWindows(): BrowserWindow[] {
+  return BrowserWindow.getAllWindows().filter(w => !w.isDestroyed());
+}
+
+export function broadcastToAllWindows(channel: string, ...args: unknown[]): void {
+  for (const win of getAllWindows()) {
+    win.webContents.send(channel, ...args);
+  }
+}
+```
+
+---
+
+## Tool Window Pattern (Floating / Utility Windows)
+
+Tool windows (floating windows, tooltips, overlays) have special requirements to avoid interfering with user's workflow.
+
+### Critical: Prevent Focus Stealing
+
+When a tool window appears, it must NOT steal focus from the user's current app/input.
+
+```typescript
+// CORRECT: Tool window configuration
+const toolWindow = new BrowserWindow({
+  // Prevent focus stealing
+  focusable: false,           // CRITICAL: Window cannot receive focus
+
+  // Visual styling
+  frame: false,
+  transparent: true,
+  alwaysOnTop: true,
+  skipTaskbar: true,
+
+  // Behavior
+  resizable: false,
+  fullscreenable: false,
+
+  webPreferences: {
+    preload: path.join(__dirname, 'preload.js'),
+    contextIsolation: true,
+  },
+});
+
+// CRITICAL: Use showInactive() instead of show()
+toolWindow.showInactive();  // Shows without stealing focus
+// toolWindow.show();       // WRONG: Steals focus!
+```
+
+### Why This Matters
+
+For push-to-talk ASR:
+1. User is typing in another app (e.g., Slack, Notes)
+2. User triggers recording with hotkey
+3. Floating window appears showing "Listening..."
+4. If window steals focus → text insertion fails (clipboard/insert goes to wrong app)
+5. With `focusable: false` + `showInactive()` → original app keeps focus → insertion works
+
+### Checklist for Tool Windows
+
+- [ ] `focusable: false` in BrowserWindow options
+- [ ] Use `showInactive()` to show window
+- [ ] `skipTaskbar: true` to hide from dock/taskbar
+- [ ] `alwaysOnTop: true` to stay visible
+- [ ] `frame: false` + `transparent: true` for custom styling
+- [ ] Handle `setVisibleOnAllWorkspaces()` carefully (can cause dock issues on macOS)
+
+---
+
 **Language**: All documentation must be written in **English**.

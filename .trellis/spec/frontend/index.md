@@ -19,10 +19,33 @@ The frontend (renderer process) provides:
 
 | Guide | Description | Priority |
 |-------|-------------|----------|
-| [IPC & Electron](./ipc-electron.md) | IPC communication patterns, context isolation | HIGH |
+| [IPC & Electron](./ipc-electron.md) | IPC communication, multi-window broadcast, tool windows | HIGH |
+| [Window Lifecycle](./window-lifecycle.md) | Window visibility, state-driven show/hide, height adaptation | HIGH |
 | [Directory Structure](./directory-structure.md) | React component organization | MEDIUM |
 | [State Management](./state-management.md) | Context patterns, local/global state | MEDIUM |
 | [React Pitfalls](./react-pitfalls.md) | Common bugs and how to avoid them | MEDIUM |
+
+### Multi-Window Development
+
+When developing multi-window Electron apps (main window + floating window):
+
+**Vite Configuration**:
+- Each window needs its own entry in `forge.config.ts` renderer array
+- Dev server assigns different ports (5173, 5174, etc.)
+- Must explicitly load correct HTML: `devUrl + '/floating.html'`
+
+```typescript
+// WRONG: Loads index.html (main window content)
+floatingWindow.loadURL(FLOATING_WINDOW_VITE_DEV_SERVER_URL);
+
+// CORRECT: Explicitly load floating.html
+const devUrl = FLOATING_WINDOW_VITE_DEV_SERVER_URL.replace(/\/$/, '');
+floatingWindow.loadURL(`${devUrl}/floating.html`);
+```
+
+**IPC Considerations**:
+- See [IPC & Electron](./ipc-electron.md) for multi-window broadcast pattern
+- See [IPC & Electron](./ipc-electron.md) for tool window pattern (focusable: false)
 
 ---
 
