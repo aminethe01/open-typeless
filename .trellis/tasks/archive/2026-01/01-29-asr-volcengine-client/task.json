@@ -1,0 +1,41 @@
+{
+  "id": "asr-volcengine-client",
+  "name": "asr-volcengine-client",
+  "title": "ASR Volcengine WebSocket Client",
+  "description": "",
+  "status": "planning",
+  "dev_type": null,
+  "scope": "asr",
+  "priority": "P1",
+  "creator": "taosu",
+  "assignee": "taosu",
+  "createdAt": "2026-01-29",
+  "completedAt": null,
+  "branch": "feature/asr-volcengine-client",
+  "base_branch": "main",
+  "worktree_path": "/Users/taosu/workspace/company/mindfold/product/share-public/ot-worktrees/feature/asr-volcengine-client",
+  "current_phase": 3,
+  "next_action": [
+    {
+      "phase": 1,
+      "action": "implement"
+    },
+    {
+      "phase": 2,
+      "action": "check"
+    },
+    {
+      "phase": 3,
+      "action": "finish"
+    },
+    {
+      "phase": 4,
+      "action": "create-pr"
+    }
+  ],
+  "commit": null,
+  "pr_url": null,
+  "subtasks": [],
+  "relatedFiles": [],
+  "notes": ""
+}
