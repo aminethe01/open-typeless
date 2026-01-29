@@ -187,3 +187,100 @@ Start Batch 2 parallel development:
 ### Next Steps
 
 - None - task complete
+
+## Session 3: ASR Integration Merge & Push-to-Talk Task Setup
+
+**Date**: 2026-01-29
+**Task**: ASR Integration Merge & Push-to-Talk Task Setup
+
+### Summary
+
+(Add summary)
+
+### Main Changes
+
+## Summary
+
+完成 ASR 模块的合并和归档，创建 Push-to-Talk 任务准备实现全局快捷键功能。
+
+## Completed
+
+| Item | Description |
+|------|-------------|
+| PR #4 合并 | asr-integration E2E flow 合并到 main |
+| Batch 2 归档 | asr-volcengine-client, asr-audio-recorder, asr-floating-window |
+| Batch 3 归档 | asr-integration |
+| 依赖安装 | uiohook-napi, @xitanggg/node-insert-text |
+| 新任务创建 | push-to-talk task with PRD and specs |
+
+## Push-to-Talk Feature Design
+
+按住 Right Option → 开始录音 → 松开 → 文字插入光标位置
+
+**核心组件**:
+- `uiohook-napi`: 全局键盘监听
+- `@xitanggg/node-insert-text`: 文字插入（不污染剪贴板）
+
+**相关 Specs**:
+- `.trellis/spec/backend/global-keyboard-hooks.md`
+- `.trellis/spec/backend/text-input.md`
+- `.trellis/spec/backend/macos-permissions.md`
+
+## Next Steps
+
+1. 启动 push-to-talk multi-agent pipeline
+2. 实现 KeyboardService, TextInputService, PushToTalkService
+3. 配置原生模块打包
+
+### Git Commits
+
+| Hash | Message |
+|------|---------|
+| `a19ecb4` | (see git log) |
+| `f7e633f` | (see git log) |
+| `59926e5` | (see git log) |
+| `de97d4d` | (see git log) |
+| `225db9a` | (see git log) |
+
+### Testing
+
+- [OK] (Add test results)
+
+### Status
+
+[OK] **Completed**
+
+### Next Steps
+
+- None - task complete
+
+## Session 4: Task Cleanup
+
+**Date**: 2026-01-29
+**Task**: Task Cleanup
+
+### Summary
+
+清理重复任务目录，归档已完成任务：删除 3 个 ASR 任务的重复副本（archive 中已有），归档 bootstrap-guidelines 任务
+
+### Main Changes
+
+
+
+### Git Commits
+
+| Hash | Message |
+|------|---------|
+| `b4a46b9` | (see git log) |
+
+### Testing
+
+- [OK] (Add test results)
+
+### Status
+
+[OK] **Completed**
+
+### Next Steps
+
+- None - task complete

@@ -13,7 +13,7 @@
   ".trellis/scripts/get-developer.sh": "82f62484fceef79954bb8aa77588789c476b7187bf0ff48d355d50108425dc67",
   ".trellis/scripts/init-developer.sh": "34bbd2db4198196ec3297116ff0d8455b2af32ec6a297c978bdf8cb5abffa2f8",
   ".trellis/scripts/multi-agent/cleanup.sh": "205993cc945ed2224ec45fa51e55f18624a6a7743fcfd44090308b1099bcb87b",
-  ".trellis/scripts/multi-agent/create-pr.sh": "64eb130cf75f4142f1daf8b4bd529601793a9aa8a9f7fed53940e2872dcfd2a1",
+  ".trellis/scripts/multi-agent/create-pr.sh": "0818c371031eed810e404997c10713ab685ca5eb4b5815f9a646ad1e5862e96c",
   ".trellis/scripts/multi-agent/plan.sh": "a2349c913314561349b92e506962b9ef9c716f61ee310a18b2fc53cde3ddf04d",
   ".trellis/scripts/multi-agent/start.sh": "feca8869f5eb305a9d1609672ce121e24cfd3ac8d000018857ca917f14dc98a0",
   ".trellis/scripts/multi-agent/status.sh": "00a422b73d4dc8e05afdd3a310fd4c36266201550ad23383151be8efa808af7b",
@@ -59,5 +59,8 @@
   ".cursor/commands/trellis-onboard.md": "d0bf3049e8be3a3c374587525eb574eef8ac47efe22bfa7b5daead7b9f07a778",
   ".cursor/commands/trellis-record-session.md": "bbb8140082f51128ed5b20eaead97ff084c10eafd52b5763acc879cde77a9351",
   ".cursor/commands/trellis-start.md": "91653b5216c58617a98d8c332937fd99534083a10cd22d6a782f7fe4053f5a15",
-  ".cursor/commands/trellis-update-spec.md": "008df54aa9b43d94dbc5107452628cac6cf18fb93bf801f8944f4a89904d066a"
+  ".cursor/commands/trellis-update-spec.md": "008df54aa9b43d94dbc5107452628cac6cf18fb93bf801f8944f4a89904d066a",
+  ".trellis/spec/backend/database-guidelines.md": "fa04a37014f16acc116e095d97ab02937cc06a0e120c4b96c3b5702f38fb06cb",
+  ".trellis/spec/backend/logging-guidelines.md": "03a0398c3480af11a5cecf68c025d505b0090f38ede899b78bd85d6ff97752c4",
+  ".trellis/spec/backend/quality-guidelines.md": "262fa49d9c4bd29b8490edd0c11ddb8f7e23fd2eb4418c8a388e176aab550357"
 }

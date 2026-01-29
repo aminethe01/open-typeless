@@ -9,7 +9,7 @@
 # 1. Stages and commits all changes (excluding workspace/)
 # 2. Pushes to origin
 # 3. Creates a Draft PR using `gh pr create`
-# 4. Updates task.json with status="review", pr_url, and current_phase
+# 4. Updates task.json with status="completed", pr_url, and current_phase
 #
 # Note: This is the only action that performs git commit, as it's the final
 # step after all implementation and checks are complete.
@@ -215,7 +215,7 @@ fi
 echo -e "${YELLOW}Updating task status...${NC}"
 if [[ "$DRY_RUN" == "true" ]]; then
   echo -e "[DRY-RUN] Would update task.json:"
-  echo -e "  status: review"
+  echo -e "  status: completed"
   echo -e "  pr_url: ${PR_URL}"
   echo -e "  current_phase: (set to create-pr phase)"
 else
@@ -226,9 +226,9 @@ else
   fi
 
   jq --arg url "$PR_URL" --argjson phase "$CREATE_PR_PHASE" \
-    '.status = "review" | .pr_url = $url | .current_phase = $phase' "$TASK_JSON" > "${TASK_JSON}.tmp"
+    '.status = "completed" | .pr_url = $url | .current_phase = $phase' "$TASK_JSON" > "${TASK_JSON}.tmp"
   mv "${TASK_JSON}.tmp" "$TASK_JSON"
-  echo -e "${GREEN}Task status updated to 'review', phase ${CREATE_PR_PHASE}${NC}"
+  echo -e "${GREEN}Task status updated to 'completed', phase ${CREATE_PR_PHASE}${NC}"
 fi
 
 # In dry-run, reset the staging area
